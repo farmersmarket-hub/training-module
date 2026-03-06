@@ -3,906 +3,600 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PMDS Training Center — The People's Market Dashboard System</title>
+  <title>Training Center — PMDS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --forest: #1a3a2a;
-      --forest-deep: #0f2419;
-      --sage: #3d6b4f;
-      --sage-light: #5a9470;
-      --cream: #faf8f4;
-      --cream-warm: #f5f0e8;
-      --sand: #e8e0d4;
-      --terracotta: #c4704b;
-      --terracotta-light: #d98e6e;
-      --gold: #c9a94e;
-      --gold-muted: #b89d47;
-      --ink: #1e1e1e;
-      --ink-light: #4a4a4a;
-      --ink-muted: #7a7a7a;
+      --green: #1f3a28;
+      --green-light: #2d5438;
+      --green-pale: #e9f0eb;
+      --orange: #f47542;
+      --orange-hover: #d85e2e;
       --white: #ffffff;
-      --radius: 10px;
-      --radius-lg: 16px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05);
-      --shadow-xl: 0 20px 60px rgba(0,0,0,0.12);
+      --off-white: #fafafa;
+      --gray-50: #f5f5f5;
+      --gray-100: #efefef;
+      --gray-200: #e0e0e0;
+      --gray-400: #999;
+      --gray-600: #666;
+      --gray-800: #2e2e2e;
+      --black: #1a1a1a;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Source Sans 3', -apple-system, sans-serif;
-      color: var(--ink);
-      background: var(--cream);
-      line-height: 1.65;
+      font-family: 'Raleway', sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* ─── NAVIGATION ─── */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(250, 248, 244, 0.92);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      transition: box-shadow 0.3s;
+    /* ── HEADER ── */
+    .header {
+      background: var(--green);
+      padding: 0 2rem;
+      position: sticky; top: 0; z-index: 100;
     }
-    .nav.scrolled { box-shadow: var(--shadow-sm); }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 64px;
+    .header-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 64px;
     }
-    .nav-brand {
-      display: flex; align-items: center; gap: 0.75rem;
-      text-decoration: none; color: var(--forest);
+    .header-left {
+      display: flex; align-items: center; gap: 1rem;
     }
-    .nav-brand-icon {
-      width: 36px; height: 36px;
-      border-radius: 8px; overflow: hidden;
+    .header-logo {
+      width: 42px; height: 42px; border-radius: 6px;
+      object-fit: cover; display: block;
     }
-    .nav-brand-icon img {
-      width: 100%; height: 100%; object-fit: cover;
+    .header-title {
+      color: var(--white); font-size: 0.95rem;
+      font-weight: 700; letter-spacing: 0.01em;
     }
-    .nav-brand-text {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem; letter-spacing: -0.02em;
+    .header-title span {
+      font-weight: 400; opacity: 0.7;
+      margin-left: 0.4rem;
     }
-    .nav-links { display: flex; gap: 0.25rem; align-items: center; }
-    .nav-links a {
-      text-decoration: none; color: var(--ink-light);
-      font-size: 0.875rem; font-weight: 500;
-      padding: 0.5rem 0.875rem; border-radius: 8px;
-      transition: all 0.2s;
+    .header-nav { display: flex; gap: 0; align-items: center; }
+    .header-nav a {
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.5rem 0.9rem; border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
     }
-    .nav-links a:hover { color: var(--forest); background: rgba(26, 58, 42, 0.06); }
-    .nav-links a.active { color: var(--forest); background: rgba(26, 58, 42, 0.08); }
+    .header-nav a:hover,
+    .header-nav a.active {
+      color: var(--white);
+      background: rgba(255,255,255,0.1);
+    }
+    .header-nav .nav-home {
+      color: rgba(255,255,255,0.55);
+      border-left: 1px solid rgba(255,255,255,0.12);
+      margin-left: 0.5rem; padding-left: 1.2rem;
+    }
 
-    .mobile-toggle {
-      display: none; background: none; border: none; cursor: pointer;
-      width: 36px; height: 36px; border-radius: 8px;
-      place-items: center; color: var(--ink);
+    .mobile-menu-btn {
+      display: none; background: none; border: none;
+      color: white; cursor: pointer; padding: 0.5rem;
     }
-    .mobile-toggle svg { width: 20px; height: 20px; }
+    .mobile-menu-btn svg { width: 22px; height: 22px; }
 
-    /* ─── HERO ─── */
-    .hero {
-      padding: 10rem 2rem 5rem;
-      background: var(--forest-deep);
-      position: relative; overflow: hidden;
+    .mobile-drawer {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: var(--green); z-index: 99;
+      flex-direction: column; padding: 0.5rem 1rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 20% 80%, rgba(61, 107, 79, 0.3), transparent),
-        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201, 169, 78, 0.12), transparent);
+    .mobile-drawer.open { display: flex; }
+    .mobile-drawer a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 0.9rem; font-weight: 600;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .hero::after {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+    /* ── PAGE INTRO ── */
+    .intro {
+      background: var(--green);
+      padding: 3rem 2rem 4.5rem;
     }
-    .hero-inner {
-      max-width: 1200px; margin: 0 auto;
-      position: relative; z-index: 1;
+    .intro-inner {
+      max-width: 1120px; margin: 0 auto;
     }
-    .hero-logo {
-      width: 120px; height: 120px; border-radius: 24px;
-      overflow: hidden; margin-bottom: 2rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      border: 2px solid rgba(255,255,255,0.1);
-    }
-    .hero-logo img { width: 100%; height: 100%; object-fit: cover; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-    .hero-eyebrow::before {
-      content: ''; width: 24px; height: 1px; background: var(--gold);
-    }
-    .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      color: var(--white); line-height: 1.15;
-      letter-spacing: -0.025em; max-width: 720px;
+    .intro-breadcrumb {
+      font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
       margin-bottom: 1.25rem;
     }
-    .hero p {
-      font-size: 1.125rem; color: rgba(255,255,255,0.7);
-      max-width: 560px; line-height: 1.7; font-weight: 300;
+    .intro-breadcrumb a {
+      color: rgba(255,255,255,0.4); text-decoration: none;
     }
-    .hero-stats {
-      display: flex; gap: 3rem; margin-top: 3rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .hero-stat-number {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem; color: var(--gold); display: block;
-    }
-    .hero-stat-label {
-      font-size: 0.8rem; color: rgba(255,255,255,0.5);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      margin-top: 0.25rem;
-    }
-
-    /* ─── SECTIONS ─── */
-    .section {
-      padding: 5rem 2rem;
-      max-width: 1200px; margin: 0 auto;
-    }
-    .section-header {
-      margin-bottom: 3rem;
-    }
-    .section-eyebrow {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.15em; color: var(--sage);
+    .intro-breadcrumb a:hover { color: rgba(255,255,255,0.7); }
+    .intro h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--white); font-weight: 700;
+      line-height: 1.25; max-width: 600px;
       margin-bottom: 0.75rem;
     }
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      color: var(--forest-deep); letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-    .section-subtitle {
-      font-size: 1.05rem; color: var(--ink-muted);
-      margin-top: 0.75rem; max-width: 600px; font-weight: 300;
+    .intro p {
+      font-size: 0.95rem; color: rgba(255,255,255,0.6);
+      max-width: 520px; line-height: 1.65; font-weight: 400;
     }
 
-    /* ─── DIVIDER BANDS ─── */
-    .band {
-      background: var(--cream-warm);
-      border-top: 1px solid var(--sand);
-      border-bottom: 1px solid var(--sand);
+    /* ── TAB STRIP ── */
+    .tabs-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky; top: 64px; z-index: 90;
     }
-    .band-dark {
-      background: var(--forest-deep);
-      color: var(--white);
+    .tabs-bar-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; gap: 0; padding: 0 2rem;
     }
-    .band-dark .section-eyebrow { color: var(--gold); }
-    .band-dark .section-title { color: var(--white); }
-    .band-dark .section-subtitle { color: rgba(255,255,255,0.6); }
-
-    /* ─── QUICK NAV CARDS ─── */
-    .quick-nav {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-      margin-top: -3rem; position: relative; z-index: 2;
-      max-width: 1200px; margin-left: auto; margin-right: auto;
-      padding: 0 2rem;
+    .tab-link {
+      font-size: 0.82rem; font-weight: 700;
+      text-decoration: none; color: var(--gray-400);
+      padding: 1rem 1.25rem;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
     }
-    .quick-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      padding: 2rem; box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(0,0,0,0.04);
-      text-decoration: none; color: var(--ink);
-      transition: all 0.3s ease;
-      display: flex; flex-direction: column; gap: 0.75rem;
-    }
-    .quick-card:hover {
-      transform: translateY(-4px); box-shadow: var(--shadow-xl);
-    }
-    .quick-card-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: grid; place-items: center; font-size: 1.4rem;
-    }
-    .quick-card-icon.docs { background: rgba(26, 58, 42, 0.08); color: var(--forest); }
-    .quick-card-icon.forms { background: rgba(196, 112, 75, 0.1); color: var(--terracotta); }
-    .quick-card-icon.journey { background: rgba(201, 169, 78, 0.12); color: var(--gold-muted); }
-    .quick-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem; letter-spacing: -0.01em;
-    }
-    .quick-card p { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.55; }
-    .quick-card-arrow {
-      margin-top: auto; font-size: 0.8rem; font-weight: 600;
-      color: var(--sage); display: flex; align-items: center; gap: 0.4rem;
-      padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.05);
-    }
-    .quick-card-arrow svg { width: 14px; height: 14px; transition: transform 0.2s; }
-    .quick-card:hover .quick-card-arrow svg { transform: translateX(3px); }
-
-    /* ─── DOCUMENTS ─── */
-    .doc-card {
-      display: flex; gap: 2rem; align-items: stretch;
-      background: var(--white); border-radius: var(--radius-lg);
-      border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: var(--shadow-md); overflow: hidden;
-      transition: box-shadow 0.3s;
-    }
-    .doc-card:hover { box-shadow: var(--shadow-lg); }
-    .doc-preview {
-      width: 280px; min-height: 320px; flex-shrink: 0;
-      background: var(--forest-deep);
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 1rem; padding: 2rem;
-    }
-    .doc-preview-icon { font-size: 4rem; opacity: 0.9; }
-    .doc-preview-badge {
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.85);
-      font-size: 0.7rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      padding: 0.35rem 0.85rem; border-radius: 20px;
-    }
-    .doc-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
-    .doc-tag {
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--sage);
-      background: rgba(61, 107, 79, 0.08);
-      padding: 0.3rem 0.65rem; border-radius: 4px;
-      display: inline-block; width: fit-content;
-      margin-bottom: 1rem;
-    }
-    .doc-body h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem; color: var(--forest-deep);
-      letter-spacing: -0.01em; margin-bottom: 0.75rem;
-    }
-    .doc-body p {
-      font-size: 0.925rem; color: var(--ink-muted); line-height: 1.65;
-      flex: 1;
-    }
-    .doc-meta {
-      display: flex; gap: 1.5rem; margin-top: 1.25rem;
-      padding-top: 1.25rem; border-top: 1px solid rgba(0,0,0,0.05);
-      font-size: 0.8rem; color: var(--ink-muted);
-    }
-    .doc-meta span { display: flex; align-items: center; gap: 0.35rem; }
-    .doc-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.65rem 1.25rem; border-radius: 8px;
-      font-size: 0.85rem; font-weight: 600;
-      text-decoration: none; transition: all 0.2s;
-      cursor: pointer; border: none;
-    }
-    .btn-primary {
-      background: var(--forest); color: var(--white);
-    }
-    .btn-primary:hover { background: var(--sage); }
-    .btn-outline {
-      background: transparent; color: var(--forest);
-      border: 1.5px solid rgba(26, 58, 42, 0.2);
-    }
-    .btn-outline:hover {
-      border-color: var(--forest); background: rgba(26, 58, 42, 0.04);
-    }
-    .btn svg { width: 16px; height: 16px; }
-
-    /* ─── FORMS GRID ─── */
-    .forms-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-    }
-    .form-card {
-      background: var(--white); border-radius: var(--radius);
-      border: 1px solid rgba(0,0,0,0.06);
-      padding: 1.25rem 1.5rem;
-      display: flex; align-items: flex-start; gap: 1rem;
-      text-decoration: none; color: var(--ink);
-      transition: all 0.25s;
-      position: relative;
-    }
-    .form-card:hover {
-      border-color: var(--sage-light);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-    }
-    .form-card-num {
-      width: 32px; height: 32px; border-radius: 8px;
-      display: grid; place-items: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; font-weight: 500;
-      flex-shrink: 0;
-    }
-    .form-card-num.cat-vendor { background: rgba(196, 112, 75, 0.1); color: var(--terracotta); }
-    .form-card-num.cat-manager { background: rgba(26, 58, 42, 0.08); color: var(--forest); }
-    .form-card-num.cat-attendee { background: rgba(90, 148, 112, 0.12); color: var(--sage); }
-    .form-card-num.cat-finance { background: rgba(201, 169, 78, 0.12); color: var(--gold-muted); }
-    .form-card-num.cat-csa { background: rgba(107, 79, 140, 0.1); color: #6b4f8c; }
-    .form-card-info h4 {
-      font-size: 0.925rem; font-weight: 600;
-      line-height: 1.35; margin-bottom: 0.3rem;
-    }
-    .form-card-info p {
-      font-size: 0.78rem; color: var(--ink-muted); line-height: 1.45;
-    }
-    .form-badge {
-      position: absolute; top: 0.75rem; right: 0.75rem;
-      font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-    }
-    .form-badge.coming { background: rgba(201,169,78,0.15); color: var(--gold-muted); }
-    .form-badge.live { background: rgba(61,107,79,0.12); color: var(--sage); }
-
-    /* ─── CATEGORY FILTERS ─── */
-    .filter-bar {
-      display: flex; gap: 0.5rem; flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-    .filter-btn {
-      background: var(--white); border: 1.5px solid rgba(0,0,0,0.08);
-      border-radius: 20px; padding: 0.4rem 1rem;
-      font-size: 0.8rem; font-weight: 500; color: var(--ink-muted);
-      cursor: pointer; transition: all 0.2s;
-      font-family: 'Source Sans 3', sans-serif;
-    }
-    .filter-btn:hover { border-color: var(--sage); color: var(--sage); }
-    .filter-btn.active {
-      background: var(--forest); color: var(--white);
-      border-color: var(--forest);
+    .tab-link:hover { color: var(--gray-800); }
+    .tab-link.active {
+      color: var(--green); border-bottom-color: var(--green);
     }
 
-    /* ─── JOURNEY MAPS ─── */
-    .journey-card {
-      background: var(--white); border-radius: var(--radius-lg);
-      overflow: hidden; box-shadow: var(--shadow-md);
-      border: 1px solid rgba(0,0,0,0.06);
-      display: grid; grid-template-columns: 1fr 1fr;
-      min-height: 360px;
+    /* ── CONTENT ── */
+    .content { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+
+    .panel { padding: 3.5rem 0; }
+    .panel + .panel { border-top: 1px solid var(--gray-100); }
+    .panel-label {
+      font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--orange); margin-bottom: 0.5rem;
     }
-    .journey-visual {
-      background: linear-gradient(135deg, var(--forest-deep) 0%, var(--sage) 100%);
+    .panel-heading {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.55rem; font-weight: 700;
+      color: var(--black); line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+    .panel-desc {
+      font-size: 0.88rem; color: var(--gray-600);
+      max-width: 540px; margin-bottom: 2rem;
+    }
+
+    /* ── DOCUMENT CARD ── */
+    .doc {
+      display: grid; grid-template-columns: 200px 1fr;
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: 8px; overflow: hidden;
+    }
+    .doc-cover {
+      background: var(--green);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 3rem; text-align: center; position: relative;
+      padding: 2rem; gap: 0.75rem;
     }
-    .journey-visual::after {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20Z' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+    .doc-cover img {
+      width: 64px; height: 64px; border-radius: 10px;
     }
-    .journey-visual-content { position: relative; z-index: 1; }
+    .doc-cover-label {
+      font-size: 0.62rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.5);
+    }
+    .doc-detail { padding: 1.75rem 2rem; }
+    .doc-detail h3 {
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--black); margin-bottom: 0.5rem;
+    }
+    .doc-detail p {
+      font-size: 0.84rem; color: var(--gray-600);
+      line-height: 1.6; margin-bottom: 1.25rem;
+    }
+    .doc-meta-row {
+      display: flex; gap: 1.5rem;
+      font-size: 0.75rem; color: var(--gray-400);
+      font-weight: 600; margin-bottom: 1.25rem;
+    }
+    .doc-actions { display: flex; gap: 0.6rem; }
+
+    .btn-fill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--orange); color: var(--white);
+      font-size: 0.8rem; font-weight: 700;
+      padding: 0.55rem 1.1rem; border-radius: 5px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.15s;
+      font-family: 'Raleway', sans-serif;
+    }
+    .btn-fill:hover { background: var(--orange-hover); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: none; color: var(--green);
+      font-size: 0.8rem; font-weight: 700;
+      padding: 0.55rem 1.1rem; border-radius: 5px;
+      text-decoration: none; cursor: pointer;
+      border: 1.5px solid var(--gray-200);
+      transition: border-color 0.15s;
+      font-family: 'Raleway', sans-serif;
+    }
+    .btn-ghost:hover { border-color: var(--green); }
+
+    /* ── FILTER + FORM GRID ── */
+    .filter-row {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .filter-chip {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.4rem 0.9rem; border-radius: 4px;
+      border: 1.5px solid var(--gray-200);
+      background: var(--white); color: var(--gray-600);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .filter-chip:hover { border-color: var(--green); color: var(--green); }
+    .filter-chip.on {
+      background: var(--green); color: var(--white);
+      border-color: var(--green);
+    }
+
+    .form-list {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0.75rem;
+    }
+    .form-item {
+      display: flex; align-items: flex-start; gap: 0.85rem;
+      padding: 1rem 1.15rem;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      text-decoration: none; color: var(--gray-800);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    .form-item:hover {
+      border-color: var(--green);
+      box-shadow: 0 2px 8px rgba(31,58,40,0.08);
+    }
+    .form-num {
+      width: 28px; height: 28px; border-radius: 5px;
+      display: grid; place-items: center;
+      font-size: 0.68rem; font-weight: 800;
+      flex-shrink: 0; line-height: 1;
+    }
+    .form-num.c-vendor { background: #fce8de; color: #c4552a; }
+    .form-num.c-mgr    { background: var(--green-pale); color: var(--green); }
+    .form-num.c-attend  { background: #dff0e6; color: #2a7d4f; }
+    .form-num.c-csa     { background: #ede5f5; color: #6b4f8c; }
+    .form-num.c-fin     { background: #fef4dc; color: #9e7c1a; }
+    .form-item-body h4 {
+      font-size: 0.84rem; font-weight: 700;
+      line-height: 1.35; margin-bottom: 0.2rem;
+      color: var(--black);
+    }
+    .form-item-body p {
+      font-size: 0.74rem; color: var(--gray-600); line-height: 1.45;
+    }
+    .status-tag {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      font-size: 0.58rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.15rem 0.45rem; border-radius: 3px;
+    }
+    .status-tag.soon { background: #fef4dc; color: #9e7c1a; }
+    .status-tag.live { background: #dff0e6; color: #2a7d4f; }
+
+    /* ── JOURNEY MAP ── */
+    .journey {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px; overflow: hidden;
+      min-height: 340px;
+    }
+    .journey-left {
+      background: var(--green);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 3rem 2rem; text-align: center;
+    }
+    .journey-left h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.6rem; color: var(--white);
+      line-height: 1.3;
+    }
+    .journey-left p {
+      color: rgba(255,255,255,0.5); font-size: 0.8rem;
+      margin-top: 0.5rem; font-weight: 500;
+    }
     .journey-roles {
-      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
       justify-content: center; margin-top: 1.5rem;
     }
-    .journey-role {
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.9);
-      padding: 0.35rem 0.85rem; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 500;
+    .journey-role-tag {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      padding: 0.3rem 0.7rem; border-radius: 3px;
+      font-size: 0.7rem; font-weight: 600;
     }
-    .journey-visual h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem; color: var(--white);
+    .journey-right {
+      padding: 2.5rem 2rem;
+      display: flex; flex-direction: column; justify-content: center;
     }
-    .journey-visual p {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem; margin-top: 0.5rem;
+    .journey-right h3 {
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--black); margin-bottom: 1rem;
     }
-    .journey-body {
-      padding: 2.5rem; display: flex; flex-direction: column;
-      justify-content: center;
+    .journey-checklist {
+      list-style: none; display: flex;
+      flex-direction: column; gap: 0.6rem;
     }
-    .journey-body h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem; color: var(--forest-deep);
-      margin-bottom: 1rem;
+    .journey-checklist li {
+      font-size: 0.84rem; color: var(--gray-600);
+      padding-left: 1.4rem; position: relative; line-height: 1.5;
     }
-    .journey-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-    .journey-features li {
-      display: flex; align-items: flex-start; gap: 0.75rem;
-      font-size: 0.9rem; color: var(--ink-light);
+    .journey-checklist li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.45rem;
+      width: 8px; height: 8px; border-radius: 2px;
+      background: var(--orange);
     }
-    .journey-features li::before {
-      content: '✓'; color: var(--sage); font-weight: 700;
-      flex-shrink: 0; margin-top: 1px;
-    }
-    .journey-body .btn { margin-top: 1.5rem; width: fit-content; }
+    .journey-right .btn-fill { margin-top: 1.5rem; width: fit-content; }
 
-    /* ─── FOOTER ─── */
+    /* ── FOOTER ── */
     .footer {
-      background: var(--forest-deep); color: rgba(255,255,255,0.5);
-      padding: 3rem 2rem;
+      background: var(--green); color: rgba(255,255,255,0.5);
+      padding: 2rem; margin-top: 3rem;
     }
     .footer-inner {
-      max-width: 1200px; margin: 0 auto;
+      max-width: 1120px; margin: 0 auto;
       display: flex; justify-content: space-between;
-      align-items: center;
+      align-items: center; font-size: 0.75rem;
     }
-    .footer-brand {
+    .footer-left {
       display: flex; align-items: center; gap: 0.75rem;
-      font-family: 'DM Serif Display', serif;
-      font-size: 1rem; color: rgba(255,255,255,0.8);
     }
-    .footer-brand img {
-      width: 32px; height: 32px; border-radius: 6px;
+    .footer-left img {
+      width: 28px; height: 28px; border-radius: 4px;
     }
-    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-left span { font-weight: 600; color: rgba(255,255,255,0.7); }
+    .footer-links { display: flex; gap: 1.25rem; }
     .footer-links a {
-      color: rgba(255,255,255,0.5); text-decoration: none;
-      font-size: 0.8rem; transition: color 0.2s;
+      color: rgba(255,255,255,0.45); text-decoration: none;
+      font-weight: 600; transition: color 0.15s;
     }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-copy { font-size: 0.75rem; margin-top: 1.5rem; text-align: center; }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
 
-    /* ─── ANIMATIONS ─── */
-    .fade-up {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .header-nav { display: none; }
+      .mobile-menu-btn { display: block; }
+      .doc { grid-template-columns: 1fr; }
+      .doc-cover { padding: 1.5rem; flex-direction: row; gap: 1rem; }
+      .doc-cover img { width: 40px; height: 40px; }
+      .journey { grid-template-columns: 1fr; }
+      .tabs-bar-inner { overflow-x: auto; }
+      .footer-inner { flex-direction: column; gap: 0.75rem; text-align: center; }
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-up.d1 { transition-delay: 0.1s; }
-    .fade-up.d2 { transition-delay: 0.2s; }
-    .fade-up.d3 { transition-delay: 0.3s; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      .quick-nav { grid-template-columns: 1fr; margin-top: -2rem; }
-      .doc-card { flex-direction: column; }
-      .doc-preview { width: 100%; min-height: 160px; }
-      .journey-card { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: column; gap: 1.5rem; }
-      .nav-links { display: none; }
-      .mobile-toggle { display: grid; }
-      .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    @media (max-width: 500px) {
+      .form-list { grid-template-columns: 1fr; }
+      .intro { padding: 2rem 1.25rem 3.5rem; }
+      .content { padding: 0 1.25rem; }
     }
 
-    @media (max-width: 600px) {
-      .forms-grid { grid-template-columns: 1fr; }
-      .hero { padding: 8rem 1.25rem 4rem; }
-      .section { padding: 3.5rem 1.25rem; }
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
     }
-
-    /* mobile nav */
-    .mobile-nav {
-      display: none; position: fixed; top: 64px; left: 0; right: 0;
-      background: rgba(250, 248, 244, 0.98);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      padding: 1rem; z-index: 99;
-      flex-direction: column; gap: 0.25rem;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      text-decoration: none; color: var(--ink-light);
-      font-size: 0.95rem; font-weight: 500;
-      padding: 0.75rem 1rem; border-radius: 8px;
-      display: block;
-    }
-    .mobile-nav a:hover { background: rgba(26,58,42,0.06); color: var(--forest); }
+    .reveal.shown { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-brand">
-        <div class="nav-brand-icon"><img src="logo.png" alt="PMDS Logo" /></div>
-        <span class="nav-brand-text">PMDS Training</span>
-      </a>
-      <div class="nav-links">
-        <a href="#documents" class="active">Documents</a>
-        <a href="#forms">Interactive Forms</a>
-        <a href="#journeys">Journey Maps</a>
-        <a href="https://farmersmarket-hub.github.io/Home/" target="_blank" rel="noopener">Main Site ↗</a>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <img src="logo.png" alt="PMDS" class="header-logo" />
+        <div class="header-title">PMDS<span>Training Center</span></div>
       </div>
-      <button class="mobile-toggle" onclick="toggleMobile()" aria-label="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <nav class="header-nav">
+        <a href="#documents" class="active">Documents</a>
+        <a href="#forms">Forms</a>
+        <a href="#journeys">Journey Maps</a>
+        <a href="https://farmersmarket-hub.github.io/Home/" class="nav-home">Back to Main Site</a>
+      </nav>
+      <button class="mobile-menu-btn" onclick="document.getElementById('drawer').classList.toggle('open')" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
       </button>
     </div>
-  </nav>
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#documents" onclick="closeMobile()">Documents</a>
-    <a href="#forms" onclick="closeMobile()">Interactive Forms</a>
-    <a href="#journeys" onclick="closeMobile()">Journey Maps</a>
-    <a href="https://farmersmarket-hub.github.io/Home/" target="_blank" rel="noopener">Main Site ↗</a>
-  </div>
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="hero-logo"><img src="logo.png" alt="The People's Market Dashboard System" /></div>
-      <div class="hero-eyebrow">Training Center</div>
-      <h1>Everything you need to master the PMDS</h1>
-      <p>Your single resource for documentation, interactive form walkthroughs, and role-based journey maps for The People's Market Dashboard System.</p>
-      <div class="hero-stats">
-        <div>
-          <span class="hero-stat-number">18</span>
-          <div class="hero-stat-label">Interactive Forms</div>
-        </div>
-        <div>
-          <span class="hero-stat-number">5</span>
-          <div class="hero-stat-label">User Roles</div>
-        </div>
-        <div>
-          <span class="hero-stat-number">8</span>
-          <div class="hero-stat-label">Languages</div>
-        </div>
-      </div>
-    </div>
   </header>
-
-  <!-- QUICK NAV -->
-  <div class="quick-nav">
-    <a href="#documents" class="quick-card fade-up">
-      <div class="quick-card-icon docs">📄</div>
-      <h3>Documents</h3>
-      <p>Access the official PMDS User Guide and reference materials for all user groups.</p>
-      <div class="quick-card-arrow">Browse documents <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
-    </a>
-    <a href="#forms" class="quick-card fade-up d1">
-      <div class="quick-card-icon forms">🎮</div>
-      <h3>Interactive Forms</h3>
-      <p>Step-by-step Arcade walkthroughs for every PMDS form — practice before market day.</p>
-      <div class="quick-card-arrow">Explore forms <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
-    </a>
-    <a href="#journeys" class="quick-card fade-up d2">
-      <div class="quick-card-icon journey">🗺️</div>
-      <h3>Journey Maps</h3>
-      <p>Visual, multilingual role-based guides that walk you through the full market experience.</p>
-      <div class="quick-card-arrow">View maps <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div>
-    </a>
+  <div class="mobile-drawer" id="drawer">
+    <a href="#documents" onclick="document.getElementById('drawer').classList.remove('open')">Documents</a>
+    <a href="#forms" onclick="document.getElementById('drawer').classList.remove('open')">Forms</a>
+    <a href="#journeys" onclick="document.getElementById('drawer').classList.remove('open')">Journey Maps</a>
+    <a href="https://farmersmarket-hub.github.io/Home/">Back to Main Site</a>
   </div>
 
-  <!-- DOCUMENTS SECTION -->
-  <section class="section" id="documents">
-    <div class="section-header fade-up">
-      <div class="section-eyebrow">01 — Documentation</div>
-      <h2 class="section-title">Reference Documents</h2>
-      <p class="section-subtitle">Official guides and manuals for the People's Market Dashboard System. Always access the latest version via the QR code in training materials.</p>
+  <!-- INTRO -->
+  <div class="intro">
+    <div class="intro-inner">
+      <div class="intro-breadcrumb"><a href="https://farmersmarket-hub.github.io/Home/">PMDS</a>&ensp;/&ensp;Training Center</div>
+      <h1>Training Center</h1>
+      <p>Documentation, interactive form walkthroughs, and role-based journey maps for The People's Market Dashboard System.</p>
     </div>
+  </div>
 
-    <div class="doc-card fade-up">
-      <div class="doc-preview">
-        <div class="doc-preview-icon"><img src="logo.png" alt="PMDS" style="width:80px;height:80px;border-radius:16px;" /></div>
-        <div class="doc-preview-badge">PDF Document</div>
-      </div>
-      <div class="doc-body">
-        <div class="doc-tag">Primary Reference</div>
-        <h3>PMDS Administration &amp; User Guide</h3>
-        <p>The comprehensive guide covering system components, user-specific instructions for PGL market managers, vendors, and funders. Includes mobile wallet operations, transaction processing, CSA management, payment reconciliation, back-up paper systems, and policy considerations.</p>
-        <div class="doc-meta">
-          <span>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M2 6h12"/></svg>
-            Version 1.1
-          </span>
-          <span>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
-            39 Pages
-          </span>
-          <span>
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12V4a2 2 0 012-2h4a2 2 0 012 2v8"/><path d="M2 12h12"/></svg>
-            Year 2 Market
-          </span>
-        </div>
-        <div class="doc-actions">
-          <a href="PMDS User Guide v1.1.pdf" target="_blank" class="btn btn-primary">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M4 7l4 4 4-4"/><path d="M2 12v2h12v-2"/></svg>
-            Download PDF
-          </a>
-          <a href="PMDS User Guide v1.1.pdf" target="_blank" class="btn btn-outline">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 8h6M8 5v6"/></svg>
-            View in Browser
-          </a>
-        </div>
-      </div>
+  <!-- TAB STRIP -->
+  <div class="tabs-bar">
+    <div class="tabs-bar-inner">
+      <a href="#documents" class="tab-link active">Documents</a>
+      <a href="#forms" class="tab-link">Interactive Forms</a>
+      <a href="#journeys" class="tab-link">Journey Maps</a>
     </div>
-  </section>
+  </div>
 
-  <!-- INTERACTIVE FORMS SECTION -->
-  <div class="band" id="forms">
-    <section class="section">
-      <div class="section-header fade-up">
-        <div class="section-eyebrow">02 — Interactive Walkthroughs</div>
-        <h2 class="section-title">Form Training Modules</h2>
-        <p class="section-subtitle">Interactive step-by-step walkthroughs built with Arcade. Click any form to launch its guided tutorial. Filter by category to find what you need.</p>
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- 1. DOCUMENTS -->
+    <section class="panel" id="documents">
+      <div class="reveal">
+        <div class="panel-label">Documentation</div>
+        <h2 class="panel-heading">Reference Documents</h2>
+        <p class="panel-desc">Official guides for the PMDS. Always access the latest version through the QR code shared during training.</p>
       </div>
-
-      <div class="filter-bar fade-up">
-        <button class="filter-btn active" data-filter="all">All Forms</button>
-        <button class="filter-btn" data-filter="vendor">Vendor</button>
-        <button class="filter-btn" data-filter="manager">Manager / PGL</button>
-        <button class="filter-btn" data-filter="attendee">Attendee</button>
-        <button class="filter-btn" data-filter="csa">CSA</button>
-        <button class="filter-btn" data-filter="finance">Finance</button>
-      </div>
-
-      <div class="forms-grid" id="formsGrid">
-
-        <!-- VENDOR FORMS -->
-        <a href="#" class="form-card fade-up" data-cat="vendor" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-vendor">01</div>
-          <div class="form-card-info">
-            <h4>Market Vendor Request Form</h4>
-            <p>Apply to become a registered vendor. Generates your Vendor ID and PIN.</p>
+      <div class="doc reveal">
+        <div class="doc-cover">
+          <img src="logo.png" alt="PMDS" />
+          <div class="doc-cover-label">PDF &middot; 39 pages</div>
+        </div>
+        <div class="doc-detail">
+          <h3>PMDS Administration &amp; User Guide v1.1</h3>
+          <p>Comprehensive guide covering system components, user-specific instructions for PGL market managers, vendors, and funders. Includes mobile wallet operations, transaction processing, CSA management, payment reconciliation, and the back-up paper system.</p>
+          <div class="doc-meta-row">
+            <span>Version 1.1</span>
+            <span>Year 2 Market</span>
+            <span>All User Groups</span>
           </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="vendor" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-vendor">02</div>
-          <div class="form-card-info">
-            <h4>Vendor Document Upload Form</h4>
-            <p>Upload required documents like W-9, licenses, and certifications.</p>
+          <div class="doc-actions">
+            <a href="PMDS User Guide v1.1.pdf" target="_blank" class="btn-fill">Download PDF</a>
+            <a href="PMDS User Guide v1.1.pdf" target="_blank" class="btn-ghost">View in Browser</a>
           </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="vendor" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-vendor">03</div>
-          <div class="form-card-info">
-            <h4>Vendor Decision Form</h4>
-            <p>PGL approves, denies, or waitlists vendor applications.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="vendor" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-vendor">04</div>
-          <div class="form-card-info">
-            <h4>Upcoming Market Form</h4>
-            <p>Weekly confirmation of attendance and product listings for vendors.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="vendor" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-vendor">05</div>
-          <div class="form-card-info">
-            <h4>Transaction Form (QR Integration)</h4>
-            <p>Process point-of-sale transactions by scanning attendee QR codes.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <!-- ATTENDEE FORMS -->
-        <a href="#" class="form-card fade-up" data-cat="attendee" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-attendee">06</div>
-          <div class="form-card-info">
-            <h4>Attendee Registration Form</h4>
-            <p>Register new attendees, create Neighbor IDs and mobile wallets.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="attendee" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-attendee">07</div>
-          <div class="form-card-info">
-            <h4>Return Attendee Form</h4>
-            <p>Check in returning attendees and reload mobile wallet benefits.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <!-- CSA FORMS -->
-        <a href="#" class="form-card fade-up" data-cat="csa" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-csa">08</div>
-          <div class="form-card-info">
-            <h4>CSA Enrollment Form</h4>
-            <p>Enroll new members in the REACH-PGL CSA program (100 cap).</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="csa" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-csa">09</div>
-          <div class="form-card-info">
-            <h4>CSA Pick Up Form</h4>
-            <p>Document CSA bag pick-ups and track bag size assignments.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <!-- MANAGER FORMS -->
-        <a href="#" class="form-card fade-up" data-cat="manager" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-manager">10</div>
-          <div class="form-card-info">
-            <h4>Market Vendor Check-in/Check-out</h4>
-            <p>Check vendors in/out of market and manage equipment rentals.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="manager" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-manager">11</div>
-          <div class="form-card-info">
-            <h4>PGL Personnel Market Check-in</h4>
-            <p>Track staff and volunteer clock-in/out times and role assignments.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="manager" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-manager">12</div>
-          <div class="form-card-info">
-            <h4>Contract &amp; Grant Information</h4>
-            <p>Document contract details and funding sources for the market.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="manager" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-manager">13</div>
-          <div class="form-card-info">
-            <h4>Item Inventory Form</h4>
-            <p>Track PGL equipment — laptops, tables, tents — with auto-generated Item IDs.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <!-- FINANCE FORMS -->
-        <a href="#" class="form-card fade-up" data-cat="finance" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-finance">14</div>
-          <div class="form-card-info">
-            <h4>End of Market Invoice Form</h4>
-            <p>Vendors generate invoices for PGL after their last transaction.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="finance" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-finance">15</div>
-          <div class="form-card-info">
-            <h4>End of Market Payment Reconciliation</h4>
-            <p>PGL reconciles vendor invoices and verifies SNAP+ token counts.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="finance" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-finance">16</div>
-          <div class="form-card-info">
-            <h4>Vendor Payment Remittance Form</h4>
-            <p>Document ACH or check payments disbursed to vendors by PGL.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="finance" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-finance">17</div>
-          <div class="form-card-info">
-            <h4>Funder Payment Invoice Form</h4>
-            <p>Generate and send invoices to funders — REACH, Wallace, ODA, OFB.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
-        <a href="#" class="form-card fade-up" data-cat="finance" title="Launch interactive walkthrough">
-          <div class="form-card-num cat-finance">18</div>
-          <div class="form-card-info">
-            <h4>Funder Payment Received Form</h4>
-            <p>PGL documents receipt of payment remittance from market funders.</p>
-          </div>
-          <span class="form-badge coming">Coming Soon</span>
-        </a>
-
+        </div>
       </div>
     </section>
-  </div>
 
-  <!-- JOURNEY MAPS SECTION -->
-  <section class="section" id="journeys">
-    <div class="section-header fade-up">
-      <div class="section-eyebrow">03 — Role-Based Guides</div>
-      <h2 class="section-title">Vendor Journey Maps</h2>
-      <p class="section-subtitle">Interactive, multilingual journey maps that guide each user role through every phase of the market — from registration to post-market reconciliation.</p>
-    </div>
+    <!-- 2. INTERACTIVE FORMS -->
+    <section class="panel" id="forms">
+      <div class="reveal">
+        <div class="panel-label">Interactive Walkthroughs</div>
+        <h2 class="panel-heading">Form Training Modules</h2>
+        <p class="panel-desc">Step-by-step Arcade walkthroughs for every PMDS form. Click any form to launch its guided tutorial.</p>
+      </div>
+      <div class="filter-row reveal">
+        <button class="filter-chip on" data-f="all">All</button>
+        <button class="filter-chip" data-f="vendor">Vendor</button>
+        <button class="filter-chip" data-f="mgr">Manager / PGL</button>
+        <button class="filter-chip" data-f="attend">Attendee</button>
+        <button class="filter-chip" data-f="csa">CSA</button>
+        <button class="filter-chip" data-f="fin">Finance</button>
+      </div>
+      <div class="form-list reveal" id="formList">
+        <a href="#" class="form-item" data-c="vendor"><div class="form-num c-vendor">01</div><div class="form-item-body"><h4>Market Vendor Request Form</h4><p>Apply to become a registered vendor. Generates Vendor ID and PIN.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="vendor"><div class="form-num c-vendor">02</div><div class="form-item-body"><h4>Vendor Document Upload Form</h4><p>Upload required documents — W-9, licenses, certifications.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="vendor"><div class="form-num c-vendor">03</div><div class="form-item-body"><h4>Vendor Decision Form</h4><p>PGL approves, denies, or waitlists vendor applications.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="vendor"><div class="form-num c-vendor">04</div><div class="form-item-body"><h4>Upcoming Market Form</h4><p>Weekly attendance confirmation and product listings.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="vendor"><div class="form-num c-vendor">05</div><div class="form-item-body"><h4>Transaction Form (QR)</h4><p>Process point-of-sale transactions via attendee QR codes.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="attend"><div class="form-num c-attend">06</div><div class="form-item-body"><h4>Attendee Registration Form</h4><p>Register new attendees, create Neighbor IDs and mobile wallets.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="attend"><div class="form-num c-attend">07</div><div class="form-item-body"><h4>Return Attendee Form</h4><p>Check in returning attendees and reload wallet benefits.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="csa"><div class="form-num c-csa">08</div><div class="form-item-body"><h4>CSA Enrollment Form</h4><p>Enroll new members in the REACH-PGL CSA program.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="csa"><div class="form-num c-csa">09</div><div class="form-item-body"><h4>CSA Pick Up Form</h4><p>Document bag pick-ups and track bag size assignments.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="mgr"><div class="form-num c-mgr">10</div><div class="form-item-body"><h4>Vendor Check-in / Check-out</h4><p>Check vendors in/out and manage equipment rentals.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="mgr"><div class="form-num c-mgr">11</div><div class="form-item-body"><h4>PGL Personnel Check-in</h4><p>Track staff and volunteer clock-in/out and role assignments.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="mgr"><div class="form-num c-mgr">12</div><div class="form-item-body"><h4>Contract &amp; Grant Information</h4><p>Document contract details and funding sources.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="mgr"><div class="form-num c-mgr">13</div><div class="form-item-body"><h4>Item Inventory Form</h4><p>Track PGL equipment with auto-generated Item IDs.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="fin"><div class="form-num c-fin">14</div><div class="form-item-body"><h4>End of Market Invoice Form</h4><p>Vendors generate invoices for PGL after last transaction.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="fin"><div class="form-num c-fin">15</div><div class="form-item-body"><h4>Payment Reconciliation Form</h4><p>PGL reconciles vendor invoices and verifies SNAP+ tokens.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="fin"><div class="form-num c-fin">16</div><div class="form-item-body"><h4>Vendor Payment Remittance</h4><p>Document ACH or check payments to vendors.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="fin"><div class="form-num c-fin">17</div><div class="form-item-body"><h4>Funder Payment Invoice Form</h4><p>Generate invoices for REACH, Wallace, ODA, OFB.</p></div><span class="status-tag soon">Soon</span></a>
+        <a href="#" class="form-item" data-c="fin"><div class="form-num c-fin">18</div><div class="form-item-body"><h4>Funder Payment Received</h4><p>Document receipt of payment from market funders.</p></div><span class="status-tag soon">Soon</span></a>
+      </div>
+    </section>
 
-    <div class="journey-card fade-up">
-      <div class="journey-visual">
-        <div class="journey-visual-content">
+    <!-- 3. JOURNEY MAPS -->
+    <section class="panel" id="journeys">
+      <div class="reveal">
+        <div class="panel-label">Role-Based Guides</div>
+        <h2 class="panel-heading">Vendor Journey Maps</h2>
+        <p class="panel-desc">Interactive, multilingual guides for each user role — from registration through post-market reconciliation.</p>
+      </div>
+      <div class="journey reveal">
+        <div class="journey-left">
           <h3>Interactive<br />Journey Maps</h3>
-          <p>Multilingual • Role-Based • Phase-by-Phase</p>
+          <p>Multilingual &middot; Role-Based &middot; Phase-by-Phase</p>
           <div class="journey-roles">
-            <span class="journey-role">🏪 Vendor</span>
-            <span class="journey-role">📋 Manager</span>
-            <span class="journey-role">💰 Funder</span>
-            <span class="journey-role">🛍️ Customer</span>
-            <span class="journey-role">🎓 Trainee</span>
+            <span class="journey-role-tag">Vendor</span>
+            <span class="journey-role-tag">Manager</span>
+            <span class="journey-role-tag">Funder</span>
+            <span class="journey-role-tag">Customer</span>
+            <span class="journey-role-tag">Trainee</span>
           </div>
         </div>
+        <div class="journey-right">
+          <h3>Navigate the Market Experience</h3>
+          <ul class="journey-checklist">
+            <li>Select your role for a personalized step-by-step walkthrough</li>
+            <li>Available in 8 languages — English, Spanish, Rohingya, Burmese, Swahili, Somali, Arabic, Vietnamese</li>
+            <li>Covers all phases: preparation, pre-market, market day, and post-market</li>
+            <li>Built-in knowledge checks and quizzes at each module</li>
+            <li>Multi-role support for users with overlapping responsibilities</li>
+          </ul>
+          <a href="https://farmersmarket-hub.github.io/Vendor-Journey-Map/" target="_blank" rel="noopener" class="btn-fill">Open Journey Maps</a>
+        </div>
       </div>
-      <div class="journey-body">
-        <h3>Navigate the Market Experience</h3>
-        <ul class="journey-features">
-          <li>Select your role and see a personalized step-by-step walkthrough</li>
-          <li>Available in 8 languages — English, Spanish, Rohingya, Burmese, Swahili, Somali, Arabic, Vietnamese</li>
-          <li>Covers all phases: preparation, pre-market, market day, and post-market</li>
-          <li>Includes built-in knowledge checks and quizzes at each module</li>
-          <li>Multi-role support for users wearing multiple hats (e.g., Manager-Vendor)</li>
-        </ul>
-        <a href="https://farmersmarket-hub.github.io/Vendor-Journey-Map/" target="_blank" rel="noopener" class="btn btn-primary">
-          Open Journey Maps
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l8-8M6 4h6v6"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
+
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <div>
-        <div class="footer-brand"><img src="logo.png" alt="PMDS" /> The People's Market Dashboard System</div>
+      <div class="footer-left">
+        <img src="logo.png" alt="PMDS" />
+        <span>People's Market Dashboard System &middot; University of Cincinnati</span>
       </div>
       <div class="footer-links">
-        <a href="https://farmersmarket-hub.github.io/Home/" target="_blank" rel="noopener">Main Website</a>
-        <a href="https://farmersmarket-hub.github.io/Vendor-Journey-Map/" target="_blank" rel="noopener">Journey Maps</a>
-        <a href="#documents">Documents</a>
+        <a href="https://farmersmarket-hub.github.io/Home/">Main Site</a>
+        <a href="https://farmersmarket-hub.github.io/Vendor-Journey-Map/">Journey Maps</a>
       </div>
     </div>
-    <div class="footer-copy">© 2025 People's Market Dashboard System — University of Cincinnati Homegrown Community &amp; Technology Design Lab</div>
   </footer>
 
   <script>
-    // Scroll-triggered fade animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // Reveal on scroll
+    const obs = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) e.target.classList.add('shown'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Nav shadow on scroll
-    window.addEventListener('scroll', () => {
-      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
-    });
-
-    // Category filter
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.dataset.filter;
-        document.querySelectorAll('.form-card').forEach(card => {
-          if (cat === 'all' || card.dataset.cat === cat) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
+    // Filter chips
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+        chip.classList.add('on');
+        const f = chip.dataset.f;
+        document.querySelectorAll('.form-item').forEach(item => {
+          item.style.display = (f === 'all' || item.dataset.c === f) ? 'flex' : 'none';
         });
       });
     });
 
-    // Mobile nav
-    function toggleMobile() {
-      document.getElementById('mobileNav').classList.toggle('open');
-    }
-    function closeMobile() {
-      document.getElementById('mobileNav').classList.remove('open');
-    }
-
-    // Active nav link on scroll
-    const sections = ['documents', 'forms', 'journeys'];
+    // Active tab tracking
+    const panels = ['documents', 'forms', 'journeys'];
+    const tabLinks = document.querySelectorAll('.tab-link');
+    const navLinks = document.querySelectorAll('.header-nav a:not(.nav-home)');
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY + 120;
-      let current = sections[0];
-      sections.forEach(id => {
+      const y = window.scrollY + 180;
+      let cur = panels[0];
+      panels.forEach(id => {
         const el = document.getElementById(id);
-        if (el && el.offsetTop <= scrollY) current = id;
+        if (el && el.offsetTop <= y) cur = id;
       });
-      document.querySelectorAll('.nav-links a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
+      tabLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
     });
   </script>
 </body>
