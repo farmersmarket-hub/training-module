@@ -354,6 +354,95 @@
     }
     .journey-right .btn-fill { margin-top: 1.5rem; width: fit-content; }
 
+    /* ── PASSWORD MODAL ── */
+    .pw-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(26,26,26,0.55);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    .pw-overlay.open { display: flex; }
+    .pw-modal {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 2.25rem 2rem 2rem;
+      width: 90%; max-width: 380px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      position: relative;
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .pw-modal-close {
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-400); padding: 0.25rem;
+      transition: color 0.15s;
+    }
+    .pw-modal-close:hover { color: var(--gray-800); }
+    .pw-modal-close svg { width: 18px; height: 18px; }
+    .pw-modal-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--green-pale);
+      display: grid; place-items: center;
+      margin-bottom: 1rem;
+    }
+    .pw-modal-icon svg { width: 20px; height: 20px; color: var(--green); }
+    .pw-modal h3 {
+      font-size: 1.05rem; font-weight: 800;
+      color: var(--black); margin-bottom: 0.3rem;
+    }
+    .pw-modal p {
+      font-size: 0.8rem; color: var(--gray-600);
+      margin-bottom: 1.25rem; line-height: 1.5;
+    }
+    .pw-input-wrap {
+      position: relative; margin-bottom: 0.75rem;
+    }
+    .pw-input {
+      width: 100%; padding: 0.65rem 2.5rem 0.65rem 0.85rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.85rem; font-weight: 500;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 6px; outline: none;
+      transition: border-color 0.15s;
+      color: var(--gray-800);
+    }
+    .pw-input:focus { border-color: var(--green); }
+    .pw-input.error { border-color: #d44; }
+    .pw-toggle {
+      position: absolute; right: 0.6rem; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-400); padding: 0.2rem;
+    }
+    .pw-toggle:hover { color: var(--gray-600); }
+    .pw-toggle svg { width: 16px; height: 16px; }
+    .pw-error-msg {
+      font-size: 0.72rem; color: #d44; font-weight: 600;
+      margin-bottom: 0.75rem; display: none;
+    }
+    .pw-error-msg.visible { display: block; }
+    .pw-submit {
+      width: 100%;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      background: var(--orange); color: var(--white);
+      font-size: 0.82rem; font-weight: 700;
+      padding: 0.65rem 1.1rem; border-radius: 6px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.15s;
+      font-family: 'Raleway', sans-serif;
+    }
+    .pw-submit:hover { background: var(--orange-hover); }
+    .pw-hint {
+      font-size: 0.68rem; color: var(--gray-400);
+      text-align: center; margin-top: 0.75rem;
+    }
+
     /* ── FOOTER ── */
     .footer {
       background: var(--green); color: rgba(255,255,255,0.5);
@@ -430,6 +519,29 @@
     <a href="https://farmersmarket-hub.github.io/Home/">Back to Main Site</a>
   </div>
 
+  <!-- PASSWORD MODAL -->
+  <div class="pw-overlay" id="pwOverlay">
+    <div class="pw-modal">
+      <button class="pw-modal-close" onclick="closePwModal()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+      <div class="pw-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16.5" r="1.5"/></svg>
+      </div>
+      <h3>Password Required</h3>
+      <p>Enter the training password shared during your session to access the PMDS User Guide.</p>
+      <div class="pw-input-wrap">
+        <input type="password" class="pw-input" id="pwInput" placeholder="Enter password" autocomplete="off" />
+        <button class="pw-toggle" onclick="togglePw()" aria-label="Show password" type="button">
+          <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="pw-error-msg" id="pwError">Incorrect password. Please try again.</div>
+      <button class="pw-submit" onclick="submitPw()">Access Document</button>
+      <div class="pw-hint">Password provided during training via QR code</div>
+    </div>
+  </div>
+
   <!-- INTRO -->
   <div class="intro">
     <div class="intro-inner">
@@ -472,8 +584,8 @@
             <span>All User Groups</span>
           </div>
           <div class="doc-actions">
-            <a href="PMDS User Guide v1.1.pdf" target="_blank" class="btn-fill">Download PDF</a>
-            <a href="PMDS User Guide v1.1.pdf" target="_blank" class="btn-ghost">View in Browser</a>
+            <button class="btn-fill" onclick="openPwModal('download')">Download PDF</button>
+            <button class="btn-ghost" onclick="openPwModal('view')">View in Browser</button>
           </div>
         </div>
       </div>
@@ -566,13 +678,73 @@
   </footer>
 
   <script>
-    // Reveal on scroll
+    // ── Password gate ──
+    const PDF_URL = 'PMDS User Guide v1.1.pdf';
+    let pendingAction = null;
+
+    function openPwModal(action) {
+      pendingAction = action;
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').classList.remove('error');
+      document.getElementById('pwError').classList.remove('visible');
+      document.getElementById('pwOverlay').classList.add('open');
+      setTimeout(() => document.getElementById('pwInput').focus(), 120);
+    }
+
+    function closePwModal() {
+      document.getElementById('pwOverlay').classList.remove('open');
+      pendingAction = null;
+    }
+
+    function togglePw() {
+      const inp = document.getElementById('pwInput');
+      const isHidden = inp.type === 'password';
+      inp.type = isHidden ? 'text' : 'password';
+      document.getElementById('eyeIcon').innerHTML = isHidden
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M1 1l22 22"/><path d="M10.59 10.59a3 3 0 1 0 4.24 4.24"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    }
+
+    function submitPw() {
+      const val = document.getElementById('pwInput').value;
+      if (val === 'Pmarket@2025') {
+        closePwModal();
+        if (pendingAction === 'download') {
+          const a = document.createElement('a');
+          a.href = PDF_URL; a.download = ''; a.target = '_blank';
+          document.body.appendChild(a); a.click(); a.remove();
+        } else {
+          window.open(PDF_URL, '_blank');
+        }
+      } else {
+        document.getElementById('pwInput').classList.add('error');
+        document.getElementById('pwError').classList.add('visible');
+        document.getElementById('pwInput').select();
+      }
+    }
+
+    // Submit on Enter
+    document.getElementById('pwInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') submitPw();
+    });
+
+    // Close on overlay click
+    document.getElementById('pwOverlay').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closePwModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePwModal();
+    });
+
+    // ── Reveal on scroll ──
     const obs = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) e.target.classList.add('shown'); });
     }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Filter chips
+    // ── Filter chips ──
     document.querySelectorAll('.filter-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
@@ -584,7 +756,7 @@
       });
     });
 
-    // Active tab tracking
+    // ── Active tab tracking ──
     const panels = ['documents', 'forms', 'journeys'];
     const tabLinks = document.querySelectorAll('.tab-link');
     const navLinks = document.querySelectorAll('.header-nav a:not(.nav-home)');
